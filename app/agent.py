@@ -39,33 +39,56 @@ orchestrator_agent = LlmAgent(
 
 The founder said: {scrubbed_user_prompt}
 
-You have access to these tools:
-1. calculate_financial_metrics(csv_path) — computes burn rate, runway, CAC, LTV, churn
-2. load_startup_metrics(csv_path) — loads and validates the CSV
-3. generate_financial_forecast(csv_path, growth_rate, burn_reduction) — 12-month projections
+TOOL CALLING RULES — follow exactly:
 
-STEP 1: Always start by calling calculate_financial_metrics with csv_path="startup_metrics.csv"
+RULE 1: ALWAYS call calculate_financial_metrics first:
+  calculate_financial_metrics(csv_path="startup_metrics.csv")
 
-STEP 2: If the founder mentions a growth rate target (e.g. "10% monthly growth"), also call generate_financial_forecast with the appropriate growth_rate and burn_reduction values.
+RULE 2: If the founder mentions ANY percentage, growth rate, reduction, forecast,
+  projection, or 12-month in their message, you MUST also call:
+  generate_financial_forecast(
+      csv_path="startup_metrics.csv",
+      growth_rate=<e.g. 0.15 for 15%>,
+      burn_reduction=<e.g. 0.05 for 5%, or 0.0 if not stated>
+  )
 
-STEP 3: Write a comprehensive founder report using ALL the data returned:
+OUTPUT FORMAT — always use these exact sections:
 
-## 📊 Financial Health Summary
-(Actual numbers: revenue trend, expenses, burn rate, runway months, CAC, LTV, LTV:CAC ratio, churn)
+## Financial Health Summary
+Show all metrics in a markdown table:
+| Metric | Value |
+|---|---|
+| Avg Monthly Revenue | $X |
+| Avg Monthly Expenses | $X |
+| Net Burn Rate | $X/month |
+| Runway | X months |
+| CAC | $X |
+| LTV | $X |
+| LTV:CAC Ratio | X.Xx |
+| Churn Rate | X% |
 
-## 🔥 Risk Analysis
-(What the numbers reveal — highlight any critical thresholds like runway < 12 months)
+## Risk Analysis
+3 bullet points on critical findings from the numbers.
 
-## 🚀 Growth Strategy & Recommendations
-(Specific, actionable steps based on the founder's stated goals and the actual metrics)
+## Growth Strategy and Recommendations
+3-5 specific actionable steps based on the actual metrics and the founder's goals.
 
-## 📈 Investor Executive Summary
-(3-5 sentences, polished enough to paste into a deck)
+## Investor Executive Summary
+3-5 polished sentences for a pitch deck.
 
-Always be specific — use the actual numbers from the tools, not generic advice.
+## 12-Month Financial Forecast
+ONLY include this section if you called generate_financial_forecast.
+Format twelve_month_forecast as a markdown table with ALL 12 rows:
+| Month | Proj. Revenue | Proj. Expenses | Cash on Hand | Burn Rate | Runway (mo) |
+|---|---|---|---|---|---|
+| Month +1 | $X | $X | $X | $X | X |
+(continue for all 12 months)
+
+Use real numbers from the tools only. Never invent figures.
 """,
     tools=[mcp_toolset]
 )
+
 
 # ── Node 1: Security Checkpoint (pure Python — no LLM call) ────────────────
 def security_checkpoint(ctx: Context, node_input: Any):
@@ -156,3 +179,4 @@ app = App(
     root_agent=root_agent,
     name="app",
 )
+
