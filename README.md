@@ -209,6 +209,4 @@ Then relaunch with `make playground`.
 
 ---
 
-## Demo Script
 
-See [`DEMO_SCRIPT.txt`](DEMO_SCRIPT.txt) for the full spoken walkthrough.
