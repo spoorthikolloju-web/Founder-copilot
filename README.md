@@ -19,7 +19,7 @@ Built with [Google ADK](https://google.github.io/adk-docs/) · Multi-Agent Workf
 ## 🚀 Quick Start
 
 ```bash
-git clone <your-repo-url>
+git clone <https://github.com/spoorthikolloju-web/Founder-copilot>
 cd founder-copilot
 cp .env.example .env   # add your GOOGLE_API_KEY
 make install
