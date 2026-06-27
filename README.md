@@ -5,6 +5,13 @@
 Built with [Google ADK](https://google.github.io/adk-docs/) · Multi-Agent Workflow · MCP Server · Security Checkpoint
 
 ---
+## Problem Statement
+
+Startup founders often struggle to assess the financial health of their businesses quickly and accurately. While they have access to raw financial data in spreadsheets, converting those numbers into meaningful insights such as runway estimation, customer acquisition cost (CAC), lifetime value (LTV), churn rate, and profitability requires financial expertise. Existing tools either provide generic recommendations or require manual analysis, making strategic decision-making time-consuming and expensive.
+
+## Solution
+
+FounderCopilot is an AI-powered financial assistant designed to help startup founders make informed decisions with ease. By uploading a CSV file containing business metrics, users receive real-time financial analysis, automated calculation of key performance indicators (KPIs), and personalized, investor-ready strategic recommendations through a conversational interface. A built-in security layer ensures that sensitive financial data remains protected while delivering accurate and actionable insights.
 
 ## 📋 Prerequisites
 
